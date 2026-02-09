@@ -30,23 +30,23 @@ async function run() {
         const database = client.db('usersdb')
         const userCollection = database.collection('users')
 
-        app.get('/users', async(req,res)=>{
+        app.get('/users', async (req, res) => {
             const cursor = userCollection.find()
             const result = await cursor.toArray()
             res.send(result)
         })
 
         app.post('/users', async (req, res) => {
-            try {
-                const newUser = req.body;
-                const result = await userCollection.insertOne(newUser);
-                res.send(result);
-            } 
-            
-            catch (err) {
-                res.status(500).send({ error: 'Failed to add user' });
-            }
-        });
+            const newUser = req.body;
+            const result = await userCollection.insertOne(newUser);
+            res.send(result);
+        })
+
+        app.delete('/users/:id', async (req, res) => {
+            // console.log(req.params)
+            const id = req.params.id
+            console.log('id will delete', id)
+        })
 
 
         // Send a ping to confirm a successful connection
